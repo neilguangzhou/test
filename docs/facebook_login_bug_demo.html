@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>facebook login bug demo</title>
+</head>
+<body>
+    <button id="loginBtn">facebook login</button>
+    <script>
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '883416085033648',
+                status: true,
+                cookie: true,
+                oauth: true,
+                xfbml: true,
+                version: 'v10.0'
+            });
+
+            var btnElem = document.getElementById('loginBtn');
+            btnElem.addEventListener('click', function () {
+                var loginCallback = function(response) {
+                    console.log('--- facebook FB.login callback response ---');
+                    console.log(response);
+                };
+                FB.login(loginCallback, { scope: 'email' });
+            });
+        };
+    </script>
+</body>
+</html>
